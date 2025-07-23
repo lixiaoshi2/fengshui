@@ -1,12 +1,14 @@
-<template>
+<!-- <template>
   <div class="p-4">
     <h1 class="text-xl font-bold mb-4">💰 订单支付</h1>
     <div class="bg-white p-4 rounded shadow mb-4">
       <p>订单号：<strong>{{ order?.id }}</strong></p>
-      <p>金额总计：<strong>¥{{ order?.total_price }}</strong></p>
+      <p>金额总计：<strong>${{ order?.total_price }}</strong></p>
     </div>
 
+
     <h2 class="text-md font-semibold mb-2">请选择支付方式</h2>
+    <div class="text-sm text-green-600 mb-8">平台对命理方面的收费只接受微信和支付宝</div>
     <div class="space-y-4">
       <button @click="selectMethod('offline')" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">
         线下付款
@@ -20,19 +22,83 @@
       <h3 class="font-semibold mb-2">支付说明</h3>
       <div  v-if="paymentMethod === 'offline'">
         请您到店付款<br>
-         地址：<strong>多伦多北约克 XXX 街 88号   </strong> 电话：64852522 <br>
+         地址：<strong>20 Orchid Rd, Markham Toronto L3T 7T6   </strong>
+         <br>电话： 6473232111 <br>
          
-       地址：<strong>多伦多万锦 XXX 街 88号   </strong> 电话：6475852522 
+       
       </div>
       <div v-if="paymentMethod === 'etransfer'">
         请通过 e-Transfer 发送款项至邮箱：<br />
-        <strong class="text-blue-600 text-lg">pay@luobojz.com</strong><br />
+        <strong class="text-blue-600 text-lg">Sunnydu1212@hotmail.com</strong><br />
         备注中请写订单号：<strong>{{ orderId }}</strong>
       </div>
       <button @click="confirmPaid" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">我已完成支付</button>
     </div>
   </div>
+</template> -->
+
+<template>
+  <div class="p-4">
+    <h1 class="text-xl font-bold mb-4">💰 订单支付</h1>
+
+    <!-- 订单信息 -->
+    <div class="bg-white p-4 rounded shadow mb-4">
+      <p>订单号：<strong>{{ order?.id }}</strong></p>
+      <p>金额总计：<strong>${{ order?.total_price }}</strong></p>
+    </div>
+
+    <!-- 支付方式选择 -->
+    <h2 class="text-md font-semibold mb-2">请选择支付方式</h2>
+    <div class="space-y-4">
+      <button @click="selectMethod('offline')" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">
+        线下付款
+      </button>
+      <button @click="selectMethod('etransfer')" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">
+        e-Transfer
+      </button>
+      <button @click="selectMethod('alipay')" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+        支付宝支付
+      </button>
+      <button @click="selectMethod('wechat')" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
+        微信支付
+      </button>
+    </div>
+
+    <!-- 支付说明 -->
+    <div v-if="paymentMethod" class="text-sm mt-6 bg-white p-4 rounded shadow">
+      <h3 class="font-semibold mb-2">支付说明</h3>
+
+      <div v-if="paymentMethod === 'offline'">
+        请您到店付款<br>
+        地址：<strong>20 Orchid Rd, Markham Toronto L3T 7T6</strong><br>
+        电话：647-323-2111
+      </div>
+
+      <div v-if="paymentMethod === 'etransfer'">
+        请通过 e-Transfer 发送款项至邮箱：<br />
+        <strong class="text-blue-600 text-lg">Sunnydu1212@hotmail.com</strong><br />
+        备注中请写订单号：<strong>{{ order?.id }}</strong>
+      </div>
+
+      <div v-if="paymentMethod === 'alipay'" class="text-center">
+        请使用 <strong>支付宝</strong> 扫描下方二维码支付：<br />
+        <img :src="alipayQR" alt="支付宝二维码" class="mx-auto my-4 w-48 h-48 object-contain" />
+        备注中请填写订单号：<strong>{{ order?.id }}</strong>
+      </div>
+
+      <div v-if="paymentMethod === 'wechat'" class="text-center">
+        请使用 <strong>微信</strong> 扫描下方二维码支付：<br />
+        <img :src="wechatQR" alt="微信二维码" class="mx-auto my-4 w-48 h-48 object-contain" />
+        备注中请填写订单号：<strong>{{ order?.id }}</strong>
+      </div>
+
+      <button @click="confirmPaid" class="mt-4 bg-blue-500 text-white mb-10 py-2 px-4 rounded">
+        我已完成支付
+      </button>
+    </div>
+  </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue'

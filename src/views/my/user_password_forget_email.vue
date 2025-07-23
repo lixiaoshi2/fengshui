@@ -7,10 +7,10 @@
     </template>
   </van-nav-bar>
  
-  <p class="px-3 text-gray-700 text-sm mt-4">
-  系统通过邮件地址找回密码，请提交您的邮件地址，然后登录邮箱打开链接，有重置密码的链接。
+  <p class="px-10 text-gray-700 text-sm mt-4 md:mt-16">
+  通过邮件地址找回密码，请用填写账户的邮件地址，然后登录邮箱打开链接，有重置密码的链接，如果找不到，<span class="text-red-500">请在垃圾邮件中查看 </span> 。
 </p>
-  <van-form style="margin-bottom:65px; margin-top:30px;">
+  <van-form class="px-6" style="margin-bottom:65px; margin-top:30px;">
     <!-- 在双括号里的router不要this，而在click里的参数则需要this变量 -->
 
     <van-field v-model="email" type="text" name="email" label="电子邮件" placeholder="您的电子邮件地址"
@@ -37,11 +37,10 @@
 
     <div style="margin: 16px; display: flex;  justify-content: center; /* 水平居中 */  align-items: center; /* 垂直居中 */ ">
       <!-- <van-button round block type="info" native-type="submit">注册</van-button> -->
-      <van-button @click="postEmail" type="primary">提交电子邮件地址</van-button>
+      <van-button @click="postEmail" type="primary">找回密码</van-button>
     </div>
   </van-form>
-  <div style="text-align: center; margin-top: -20px;"> 已有账户，<a
-      @click.prevent="router.push({ path: '/user_login' })">请登录</a></div>
+  
 
 
 

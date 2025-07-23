@@ -4,7 +4,7 @@
 
 
      <!-- 分类导航 -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 p-2">
+    <section class="grid grid-cols-1 md:mt-16 md:grid-cols-3 gap-4 p-2">
       <div
         v-for="category in categories"
         :key="category.name"
@@ -36,9 +36,10 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const categories = [
-  { name: "🎉 起名", description: "宝宝名、公司名等", path: "/qiming" },
+  { name: "🎉 风水师傅介绍", description: "", path: "/mingli_jieshao" },
+  { name: "🎉 起名", description: "新生儿起名、改名、公司起名", path: "/product/6" },
   { name: "⚰️ 个人头像设计", description: "微信头像等", path: "/bai" },
-  { name: "🔮 公司徽标设计", description: "", path: "/mingli" },
+  { name: "🔮 公司徽标设计", description: "", path: "/product/4" },
   { name: "🔮 择日", description: "结婚、开业、动工、搬家等", path: "/mingli" },
   { name: "🔮 风水", description: "住宅、商铺、墓地等", path: "/mingli" },
   { name: "🔮 紫薇斗命盘分析", description: "", path: "/mingli" },

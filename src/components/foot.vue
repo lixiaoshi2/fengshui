@@ -55,6 +55,12 @@ const downloadApk = () => {
       <span>购物车</span>
     </div>
 
+    <div @click="router.push('/orders/')" class="tabbar-item" >
+      <i class="van-icon van-icon-cart-o"></i>
+      <span>我的订单</span>
+    </div>
+
+
     
     <a href="/my_fabu" class="tabbar-item" >
       <i class="van-icon van-icon-friends-o"></i>

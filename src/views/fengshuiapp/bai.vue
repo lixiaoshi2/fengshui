@@ -1,8 +1,9 @@
 <template>
-  <div class="p-4">
-    <h1 class="text-xl font-bold mb-4 text-gray-800">⚰️ 白事专区</h1>
+  <div ></div>
+  <div class="p-4 md:mt-">
+    <h1 class="text-xl font-bold mb-4 text-gray-800">⚰️ 纸钱烧纸冥币</h1>
     
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-16">
       <div
         v-for="item in products"
         :key="item.url"

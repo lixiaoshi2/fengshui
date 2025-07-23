@@ -102,6 +102,11 @@ const router = createRouter({
       name: 'my_fabu',
       component: () => import('../views/my/my_fabu.vue')
     },
+    {  // 发布页面
+      path: '/menu_setup',
+      name: 'menu_setup',
+      component: () => import('../views/fengshuiapp/menu_setup.vue')
+    },
 
     {  // 发布页面2管理员
       path: '/my_fabu101',
@@ -156,6 +161,18 @@ const router = createRouter({
       name: 'mingli',
       component: () => import('../views/fengshuiapp/mingli.vue')
     },
+    {  // 命理介绍
+      path: '/mingli_jieshao',
+      name: 'mingli_jieshao',
+      component: () => import('../views/fengshuiapp/mingli_jieshao.vue')
+    },
+    
+    {  // 命理业务介绍
+      path: '/mingli_yewu',
+      name: 'mingli_yewu',
+      component: () => import('../views/fengshuiapp/mingli_yewu.vue')
+    },
+
     {  // 喜事婚事
       path: '/xishi',
       name: 'xishi',
@@ -172,6 +189,16 @@ const router = createRouter({
       name: 'orders',
       component: () => import('@/views/fengshuiapp/orders.vue')
     },
+    { //订单列表
+      path: '/ordersadmin',
+      name: 'ordersadmin',
+      component: () => import('@/views/fengshuiapp/ordersadmin.vue')
+    },
+    { //订单详情处理快递等发货结束等操作
+      path: '/orderadmin_detail/:id',
+      name: 'orderadmin_detail',
+      component: () => import('@/views/fengshuiapp/orderadmin_detail.vue')
+    },
 
       { //支付页面
       path: '/pay/:order_id',
@@ -184,6 +211,13 @@ const router = createRouter({
       name: 'useraddr',
       component: () => import('@/views/fengshuiapp/useraddr.vue')
     },
+
+    { //测试页面
+      path: '/ceshi',
+      name: 'ceshi',
+      component: () => import('@/views/fengshuiapp/ceshi.vue')
+    },
+
 
 
 

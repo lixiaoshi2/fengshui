@@ -1,288 +1,251 @@
+
 <template>
-  <div class="my-container">
+  <div class="min-h-screen bg-gray-50 flex flex-col mt-8 font-sans">
 
 
-    <van-nav-bar>
-      <!-- 左侧：始终显示注册按钮 -->
-      <template #left>
-        <p @click="zhuce" class="text-blue-600 cursor-pointer">注册</p>
-      </template>
+    <header class="fixed top-0 left-0 w-full bg-white shadow-sm z-50 py-3 px-4 flex items-center justify-between
+               md:hidden"> <button @click="router.go(-1)"
+        class="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span class="ml-1 text-base">返回</span>
+      </button>
 
-      <!-- 中间：标题 -->
-      <template #title>
-        <p class="text-base font-semibold text-gray-800">
-          <span v-if="isLoggedIn">欢迎{{ shortUsername }}</span>
-          <span v-else>欢迎使用本平台</span>
-        </p>
-      </template>
+      <h1 class="text-lg font-semibold text-gray-800 tracking-wide">忆福安文化</h1>
 
-      <!-- 右侧：已登录显示退出按钮，未登录显示登录按钮 -->
-      <template #right>
-        <p v-if="isLoggedIn" @click="logout" class="text-red-500 cursor-pointer">退出</p>
-        <p v-else @click="login2" class="text-blue-600 cursor-pointer">登录</p>
-      </template>
-    </van-nav-bar>
+      <div class="w-14"></div>
+    </header>
 
 
-    <van-space :size="20"></van-space>
-    <!-- <van-cell @click="router.push('/orders')" style="  display: flex; font-size: small; color: #1989fa; text-decoration: underline; font-weight: bold;" title="所有订单" /> -->
+    <div class="md:mt-12 px-4"></div>
+    <div v-if="!isLoggedIn"
+      class="flex items-center mt-14 md:mt-16 py-3 px-4 rounded-lg shadow-md bg-gradient-to-r from-yellow-50 to-orange-50 cursor-pointer transition-transform transform hover:scale-[1.01] active:scale-[0.99] mx-4"
+      @click="login">
+      <div
+        class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center mr-3 border-2 border-yellow-300 bg-yellow-200">
+        <svg class="w-7 h-7 text-orange-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </div>
 
-    <van-cell title="所有订单" is-link style="
-    display: flex;
-    font-size: small;
-    font-weight: bold;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.2s;
-  " @click="router.push('/orders')" />
+      <div class="flex-grow">
+        <h3 class="text-lg font-semibold text-gray-800">登录/注册</h3>
+        <button class="px-3 py-0.5 text-xs rounded-full bg-orange-200 text-orange-700 shadow-sm flex items-center mt-1">
+          身份认证
+          <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
 
-    <van-row>
-      <van-col span="8"> <a href="/orders" class="order-link"> <van-cell style="" title="待付款" icon="peer-pay" />
-        </a></van-col>
-      <!-- <van-col  @click=" router.push({ path: '/my_fabu_category_sele2' }) " span="12"> <van-cell style="" title="黄页发布"   icon="peer-pay" /></van-col> -->
-      <!-- <van-col @click=" router.push({ path: '/my_post' }) " style="display: flex;align-items: center; justify-content: center;" span="12"> <van-cell  title="修改档案"  icon="manager-o" /></van-col> -->
-      <van-col span="8"> <a href="/orders" class="order-link"> <van-cell style="" title="待发货" icon="peer-pay" />
-        </a></van-col>
+      <div class="flex-shrink-0 text-gray-400 text-2xl ml-4">&gt;</div>
+    </div>
+    <main class="flex-1 overflow-y-auto px-4 py-4 md:py-6">
+      <div class="container mx-auto">
+        <section class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 mt-6 md:mt-10">
+          <div v-for="(item, index) in menus" :key="index" @click="router.push(item.path)"
+            class="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="w-8 h-8 text-gray-700 mb-2" v-html="item.svg" />
+            <span class="text-sm text-gray-700 text-center">{{ item.label }}</span>
+          </div>
+        </section>
 
-      <van-col @click="router.push('/orders')" style="display: flex;align-items: center; justify-content: center;" span="8">
-        <van-cell title="已收货" icon="manager-o" /></van-col>
+        <section class="bg-white rounded-lg shadow-md p-6 mt-6 mb-6">
+          <div class="grid grid-cols-3 gap-y-6 gap-x-2 px-6 py-4 bg-white rounded-lg shadow">
+            <div v-for="(item, index) in menus2" :key="index"
+              class="flex flex-col items-center text-sm text-gray-800 cursor-pointer" @click="router.push(item.path)">
+              <div class="w-6 h-6 text-black mb-2" v-html="item.svg"></div>
+              <div>{{ item.label }}</div>
+            </div>
+          </div>
+        </section>
 
+        <div class="mt-6 mb-6">
+          <h3 class="px-2 font-bold text-gray-800 text-lg mb-4">管理员权限</h3>
+          <section v-if="isadmin" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+            <div v-for="(item, index) in menus_guanli" :key="index" @click="router.push(item.path)"
+              class="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+              <div class="w-8 h-8 text-gray-700 mb-2" v-html="item.svg" />
+              <span class="text-sm text-gray-700 text-center">{{ item.label }}</span>
+            </div>
+          </section>
+        </div>
 
-
-
-    </van-row>
-
-
-
-    <van-space :size="20"></van-space>
-
-
-
-    <van-space :size="20"></van-space>
-    <van-cell style="  display: flex; font-size: small;" title="用户管理" />
-
-
-    <van-row>
-      <van-col style="display: flex;align-items: center; justify-content: center;" span="8">
-        <van-cell title="用户信息" @click=" router.push({ path: '/user_detail2' }) " icon="manager-o" /></van-col>
-
-      <van-col style="display: flex;align-items: center; justify-content: center;" span="8">
-        <van-cell title="修改密码" @click=" router.push({ path: '/user_changepasswd' }) " icon="manager-o" />
-      </van-col>
-      <van-col style="display: flex;align-items: center; justify-content: center;" span="8">
-        <van-cell title="地址" @click=" router.push({ path: '/useraddr' }) " icon="manager-o" />
-      </van-col>
-
-    </van-row>
-
-    <van-row>
-      <van-col style="display: flex;align-items: center; justify-content: center;" span="12">
-        <van-cell title="修改电子邮件" @click=" router.push({ path: '/user_changeEmail' }) " icon="manager-o" /></van-col>
-
-      <van-col style="display: flex;align-items: center; justify-content: center;" span="12">
-        <van-cell title="修改手机号码" @click=" router.push({ path: '/user_changePhone' }) " icon="manager-o" /></van-col>
-
-    </van-row>
-
-
-
-
-
-
-    <!-- <van-space :size="20"></van-space>
-  <van-cell style="  display: flex; font-size: small;" title="我的黄页订单" /> -->
-
- <van-space :size="20"></van-space>
-    <!-- <van-cell style="  display: flex; font-size: small; font-weight: bold;" title="雇主操作" /> -->
-
-
-
-    <!-- <van-space :size="20"></van-space>
-  <van-cell style="  display: flex; font-size: small;" title="我购买的商品订单" /> -->
-
-
-
-
-    <!-- <van-row>
-      <van-col span="12"> <a href="/ordernow" class="order-link"> <van-cell style="" title="新增查找家政" icon="peer-pay" />
-        </a>
-      </van-col>
-
-      <van-col span="12"> <a href="/getcleanorder" class="order-link"> <van-cell style="" title="查找记录"
-            icon="peer-pay" /> </a>
-      </van-col>
-
-
-
-    </van-row> -->
-
-
-
-    <van-space :size="20"></van-space>
-    <van-cell style="  display: flex; font-size: small; font-weight: bold;" title="商品" />
-
-    <van-row>
-
-      <van-col span="12"> <a href="/addproduct" class="order-link"> <van-cell style="" title="新增商品" icon="peer-pay" />
-        </a></van-col>
-      <van-col span="12"> <a href="/mygraborder" class="order-link"> <van-cell style="" title="后台订单管理"
-            icon="peer-pay" /> </a></van-col>
-
-    </van-row>
-
-
-    
-
-
-
+        <div class="mt-8 mb-8">
+          <button @click="logout"
+            class="w-full p-3 text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 transition-colors duration-200">
+            退出登录
+          </button>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
-  
+
 
 
 <script setup>
 
-import https from '@/utils/request.js'
-import { ref,onMounted,computed } from 'vue';
-import {showToast} from 'vant';
-import { useRouter,useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
+// 核心功能按钮数据
 
-var listdata2 = ref([]);
-const show = ref(false);
-
-
-
-const username = ref(localStorage.getItem('username') || '')
-const isLoggedIn = computed(() => !!username.value)
-
-// 截取简短用户名：英文最多6字符，中文最多3字符
-const shortUsername = computed(() => {
-  if (!username.value) return ''
-  const name = username.value
-  const isChinese = /[\u4e00-\u9fa5]/.test(name)
-  return isChinese ? name.slice(0, 4) : name.slice(0, 12)
-})
+const isLoggedIn = ref(false); // 默认未登录
+localStorage.setItem("is_need",1)
 
 
-// 注册登录
-const zhuce = () => {
-  console.log('注册');
+
+const menus = [
+  {
+    label: '购物车',
+    path: '/mycart',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>`,
+  },
+  {
+    label: '我的订单',
+    path: '/orders',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
+          </svg>`,
+  },
+ 
+]
+
+
+
+const menus_guanli = [
+  {
+    label: '订单管理',
+    path: '/ordersadmin',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>`,
+  },
   
-  router.push('/user_register');
+  {
+    label: '新增商品',
+    path: '/addproduct',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>`,
+  },
   
-};
+ 
+]
 
-// 绑定推送手机的注册号到数据库
-const bangding = () => {
-  console.log('注册jpush');
-  // 执行android webview认识的代码
-  const userId = localStorage.getItem("user_id");
-    // 检查 WebView 是否支持这个方法
-    if (window.AndroidInterface) {
-        window.AndroidInterface.sendUserId(userId);
-        alert("调用成功")
-    } else {
-        console.log("AndroidInterface 不存在，可能不是在 WebView 里");
-        alert("失败，AndroidInterface 不存在，可能不在webview里")
-    }
 
-    // 在这里添加获取fcm的token
-    console.log('获取了userid',response.user_id)
-    console.log("开始获取设备的token jpush")
+
+
+const menus2 = [
+  {
+    label: '修改密码',
+    path: '/user_changepasswd',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>`,
+  },
+  {
+    label: '修改邮件',
+    path: '/user_changeEmail',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
+          </svg>`,
+  },
+  {
+    label: '手机号码',
+    path: '/user_changePhone',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12h-6"/>
+          </svg>`,
+  },
+  {
+    label: '找回密码',
+    path: '/user_password_forget_email',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12h-6"/>
+          </svg>`,
+  }
+ 
   
-};
+
+]
+
 
 const logout = () => {
-  
+  // 在这里执行你的登出逻辑，例如清除 token，更新登录状态
   localStorage.removeItem("user_id")
   localStorage.removeItem('token');
   localStorage.removeItem('refresh');
-
-  // 导航到登录页面，你需要根据你的路由配置来确定登录页面的路径
-  router.push('/user_login');
-  
+  localStorage.removeItem('user_role');
+  isLoggedIn.value = false; // 模拟登出
+  // isMenuOpen.value = false;
+  router.push('/user_login'); // 登出后跳转到首页或其他页面
 };
-const login2 = () =>{
-  
-  console.log('dianjile ')
-  router.push('/user_login/').then(() => {
-          console.log('Navigation to /user_login successful');
-          
-        })
-        .catch(err => {
-          console.error('Navigation error:', err);
-        });
-}
-  
-// changepasswd()
-const changepasswd = () =>{
-  console.log('asdf')
-}
-// 获取我名下的驿站
-const getmyyizhan = ()=>{
 
-  https.get('/api/user/yizhan_addr/myyizhan').then(response => {
-      console.log('asdfas555111');
-      console.log(response);
-      // router.push('/my_post')
-    }).catch(error => {
-      console.log('出错了2');
-      console.error(error);
-      
+
+
+// 登录
+const login = () =>{
+  router.push("/user_login")
+}
+
+
+// 切换客户性质
+const qiehuan2 = () => {
+  console.log("即将切换成家政人员")
+  localStorage.setItem("is_need", 0);
+  router.push("/my_worker")
+  .then(() => {
+      // 3. 在跳转完成后，强制刷新目标页面
+      router.go(0);
+    })
+    .catch(error => {
+      console.error("路由跳转失败:", error);
     });
 }
 
-const isAdmin = ref(false)
-onMounted(() => {
-  // 加载数据，写成了一个函数，这里的数据来自于一开始
+// 是否显示管理内容
+const isadmin = ref(false); 
 
-  const user_id = localStorage.getItem('user_id');
-  console.log('user_id', user_id)
-  isLoggedIn.value = false
-  console.log('da', isLoggedIn.value)
-  if (user_id) {
-    console.log('userid2',)
+// 在组件挂载时检查 localStorage
+onMounted(() => {
+  
+  const userId = localStorage.getItem('user_id');
+  localStorage.setItem("is_need", 1);
+  if (userId) {
     isLoggedIn.value = true;
+    console.log('用户已登录，user_id:', userId);
+  } else {
+    isLoggedIn.value = false;
+    console.log('用户未登录，user_id不存在。');
   }
 
+  const userRole = localStorage.getItem('user_role');
 
-  isAdmin.value = user_id == '1' || user_id === '33' || user_id === '23'
-
+  if (userRole === 'admin' || userRole === 'partner') {
+    isadmin.value = true;
+  }
 
 
 });
 
+
+
 </script>
 
-
-
-<!-- 
-<script >
-// import tupian from '../assets/icon/huodong.jpg'
-import { useRouter,useRoute } from 'vue-router'
-export default {
-  data() {
-    return {
-    };
-  },
-};
-
-
-</script> -->
-
-
 <style scoped>
-.my-container{
-  background-color:#F4F2F2 ;
-  margin-bottom: 50px;
-}
-.van-cell__title{
-  padding-left: -20px;
-}
+/* 这里可以放置组件特有的样式，但对于Tailwind，大部分样式直接写在template里 */
+/* 如果你需要自定义一些 Tailwind 没有的动画或复杂选择器，可以写在这里 */
 </style>
-
-
-

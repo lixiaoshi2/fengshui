@@ -2,10 +2,10 @@
 
   <div class="min-h-screen bg-gray-100 pb-24">
     <!-- 顶部导航栏 -->
-    <van-nav-bar title="好听的网站名" left-text="返回" left-arrow @click-left="router.go(-1)" />
+    <van-nav-bar title="忆福安文化" left-text="返回" left-arrow @click-left="router.go(-1)" />
 
     <!-- 商品标题和价格 -->
-    <h1 class="text-xl font-bold mb-2 px-5 mt-4">{{ product.name }}</h1>
+    <h1 class="text-xl font-bold mb-2 px-5 md:mt-16 mt-4">{{ product.name }}</h1>
     <p class="text-red-600 text-lg font-semibold mb-4 px-5">${{ product.price }}</p>
 
     <!-- 商品参数信息 -->
@@ -34,9 +34,10 @@
     </div>
 
     <!-- 固定底部按钮 -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-inner mb-12">
-      <van-button type="primary" block @click="addToCart">加入购物车</van-button>
-    </div>
+    <div class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-inner mb-12 flex justify-center">
+  <div class="w-full max-w-xl"> <van-button type="primary" block @click="addToCart">加入购物车</van-button>
+  </div>
+</div>
   </div>
 
 
@@ -49,8 +50,6 @@ import { ref, onMounted } from 'vue'
 //
 const product = ref({})
 
-
-
 import https from '@/utils/request.js'
 
 import { useRoute } from 'vue-router'
@@ -58,6 +57,8 @@ import { useRouter } from 'vue-router';
  const route = useRoute()
  const router = useRouter();
 
+
+const isLoggedIn = ref(false)
 // 拼接图片完整地址
 // 动态获取当前前端域名或 IP，并拼接端口号
 // const fullImage = (path) => {
@@ -106,7 +107,7 @@ const fullImage = (path) => {
 };
 
 // 点击加入购物车
-const addToCart = async () => {
+const addToCart2 = async () => {
 
    try {
     // 尝试发送请求
@@ -120,25 +121,103 @@ const addToCart = async () => {
 
   } catch (error) {
     // 捕获请求过程中发生的错误
-
-    // 假设后端返回 401 Unauthorized 表示未登录
-    
       router.push('/user_login'); // 如果你使用了 Vue Router，需要先引入 useRouter
    
-
   }
 
-
-
 }
+
+
+// ******************************新的不需要登录兼容的购物车*****************
+
+const LOCAL_KEY = 'guest_cart';
+
+
+
+function saveLocalCart(cart) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(cart));
+}
+
+const addToCart = async () => {
+  const userId = localStorage.getItem('user_id');
+
+  // 已登录：请求后端接口
+  if (userId) {
+    try {
+      await https.post('/api/fengshui/cart/', {
+        product: product.value.id,
+        quantity: 1
+      });
+      alert('已加入购物车，请在购物车中完成后续操作');
+    } catch (error) {
+      console.error('后端请求失败', error);
+      alert('添加失败，请稍后再试');
+    }
+
+  } else {
+    // 未登录：存入 localStorage
+    const cart = getLocalCart();
+    const exist = cart.find(item => item.product_id === product.value.id);
+
+    if (exist) {
+      exist.quantity += 1;
+    } else {
+      cart.push({
+        product_id: product.value.id,
+        quantity: 1,
+        title: product.value.title,
+        price: product.value.price,
+        image: product.value.image,  // 方便购物车页展示
+      });
+    }
+
+    saveLocalCart(cart);
+    alert('商品已添加至购物车（未登录），登录后可自动合并');
+  }
+};
+
+
+function getLocalCart() {
+  const raw = localStorage.getItem(LOCAL_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+const loadCart = async () => {
+  const userId = localStorage.getItem('user_id');
+  if (userId) {
+    // 加载远程购物车
+    const res = await https.get('/api/fengshui/cart/');
+    cartItems.value = res.data;
+  } else {
+    // 加载本地购物车
+    cartItems.value = getLocalCart();
+  }
+};
+
+
 onMounted(async () => {
   const productId = route.params.id
   try {
     const res = await https.get(`/api/fengshui/products/${productId}/`)
     product.value = res
+
     
   } catch (e) {
     console.error('商品加载失败', e)
   }
+
+// 判断是否登录
+const userId = localStorage.getItem('user_id');
+  if (userId) {
+    isLoggedIn.value = true;
+    console.log('用户已登录，user_id:', userId);
+  } else {
+    isLoggedIn.value = false;
+    console.log('用户未登录，user_id不存在。');
+  }
+
+
+
+
 })
 </script>

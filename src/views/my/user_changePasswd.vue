@@ -7,7 +7,7 @@
     </template>
   </van-nav-bar>
 
-  <van-form style="margin-bottom:65px; margin-top:30px;">
+  <van-form style="margin-bottom:65px; margin-top:60px;">
     <!-- 在双括号里的router不要this，而在click里的参数则需要this变量 -->
 
     <van-field v-model="password" :type="showornot" name="password" label="新密码" placeholder="输入新密码"
@@ -38,8 +38,7 @@
       <van-button @click="changePasswd" type="primary">修改密码</van-button>
     </div>
   </van-form>
-  <div style="text-align: center; margin-top: -20px;"> 已有账户，<a
-      @click.prevent="router.push({ path: '/user_login' })">请登录</a></div>
+  
 
 
 

@@ -179,24 +179,28 @@ const goToDetails = (item) => {
   // router.push({ name: 'kitchen_detail', params: { id } });
 }
 // 删除订单
-const delitem = (index,item)=>{
-  // console.log('删除其中此条记录',index)
-  // console.log('shanchushuju',listdata2.value[index].id)
-  // console.log('listdata2',listdata2.value)
-  listdata2.value.splice(index,1);
-  // console.log('aa',item.id)
-  https.delete(('/api/mycart/delete/'+ item.id + '/')).then(response => {
-  
-    listdata2.value = listdata2.value.filter(item => item.id !== id);
-  
-  }).catch(error => {
-    console.log('删除发布的信息出错');
-    console.error(error);
-    showToast('请重新登录');
-  });
 
 
-}
+
+const delitem = async (index, item) => {
+  const userId = localStorage.getItem('user_id');
+  
+  if (userId) {
+    // 登录用户 - 向后端发送 DELETE 请求
+    console.log("jinrule")
+    
+    try {
+      await https.delete(`/api/fengshui/cartdel/${item.id}/`);
+      listdata2.splice(index, 1); // 前端更新视图
+    } catch (error) {
+      console.error('删除失败', error);
+    }
+  } else {
+    // 未登录用户 - 删除本地购物车数据
+    listdata2.splice(index, 1); // 更新视图
+    saveLocalCart(listdata2);   // 保存到本地存储
+  }
+};
 
 
 //
