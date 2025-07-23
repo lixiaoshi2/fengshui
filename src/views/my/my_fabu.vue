@@ -48,11 +48,21 @@
     </div>
     <main class="flex-1 overflow-y-auto px-4 py-4 md:py-6">
       <div class="container mx-auto">
-        <section class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 mt-6 md:mt-10">
+        <!-- <section class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 mt-6 md:mt-10">
           <div v-for="(item, index) in menus" :key="index" @click="router.push(item.path)"
             class="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
             <div class="w-8 h-8 text-gray-700 mb-2" v-html="item.svg" />
             <span class="text-sm text-gray-700 text-center">{{ item.label }}</span>
+          </div>
+        </section> -->
+
+        <section class="bg-white rounded-lg shadow-md p-6 mt-6 mb-6">
+          <div class="grid grid-cols-3 gap-y-6 gap-x-2 px-6 py-4 bg-white rounded-lg shadow">
+            <div v-for="(item, index) in menus" :key="index"
+              class="flex flex-col items-center text-sm text-gray-800 cursor-pointer" @click="router.push(item.path)">
+              <div class="w-6 h-6 text-black mb-2" v-html="item.svg"></div>
+              <div>{{ item.label }}</div>
+            </div>
           </div>
         </section>
 

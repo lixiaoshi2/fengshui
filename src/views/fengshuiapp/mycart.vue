@@ -33,7 +33,7 @@
     <div v-if="deliveryMethod === 'delivery'" class="bg-white p-2 rounded shadow mb-3">
       <div class="bg-white p-2 rounded shadow mb-3">
         <h2 class="text-md font-semibold mb-0" @click="router.push('/useraddr')">📍 选择收货地址(添加地址)</h2>
-        <div class="text-sm px-6 mb-4">大多地区$5到家，其他地区联系商家</div>
+        <div class="text-sm px-6 mb-4">大多地区$6到家，其他地区联系商家</div>
         <div v-for="addr in addressList.addresses" :key="addr.id" class="mb-3">
           <label class="flex items-center">
             <input type="radio" v-model="selectedAddressId" :value="addr.id" />
@@ -78,7 +78,7 @@
 
     </div>
 
-    
+
   </div>
 
  
@@ -86,7 +86,7 @@
   <!-- ✅ 结算按钮，固定在底部 -->
   <div class="fixed bottom-0 left-0 w-full bg-white shadow-md p-4 border-t mb-12">
     <div class="flex justify-between items-center">
-      <span class="text-lg font-semibold text-gray-700">合计：${{ total1 }} + <span class="text-sm">运费</span>  ${{ deliveryFee }} = ${{ total }}</span>
+      <span class="text-sm  text-gray-700">合计：${{ total1 }} + <span class="text-sm">运费</span>  ${{ deliveryFee }} = ${{ total }}</span>
       <button @click="checkout" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">
         结算
       </button>
@@ -109,6 +109,20 @@ const route = useRoute()
 // const cart = ref({ items: [], total: 0 })
 const deliveryMethod = ref("delivery")  // 默认是配送到家
 
+
+const deliveryFee = computed(() => {
+  // 根据 deliveryMethod 的值返回不同的运费
+  switch (deliveryMethod.value) { // 在 <script setup> 中访问 ref 值需要 .value
+    case 'delivery':
+      return 6.00; // 配送到家运费
+    case 'pickup':
+      return 0.00; // 到店自取免运费
+    case 'zixun':
+      return 0.00; // 资讯类通常没有运费
+    default:
+      return 0.00; // 默认值，或者根据业务逻辑处理未知情况
+  }
+});
 // 计算合计
 const total1 = computed(() => {
   return cart.value.items.reduce((sum, item) => {
@@ -116,15 +130,15 @@ const total1 = computed(() => {
   }, 0).toFixed(2); // 保留两位小数
 });
 
-const deliveryFee = ref(0)
- deliveryFee.value = deliveryMethod.value === 'delivery' ? 5 : 0;
+// const deliveryFee = ref(0)
+//  deliveryFee.value = deliveryMethod.value === 'delivery' ? 5 : 0;
 
 const total = computed(() => {
   const baseTotal = cart.value.items.reduce((sum, item) => {
     return sum + item.quantity * item.product_price;
   }, 0);
 
-  const deliveryFee = deliveryMethod.value === 'delivery' ? 5 : 0;
+  const deliveryFee = deliveryMethod.value === 'delivery' ? 6 : 0;
 
   return (baseTotal + deliveryFee).toFixed(2); // 总价保留两位小数
 });
@@ -156,37 +170,6 @@ const fullImage = (path) => {
   // 如果 path 不是字符串，或者为空，返回空字符串
   return '';
 };
-
-
-
-// 结账
-const checkout2 = async () => {
-  if (!cart.value.items.length) {
-    alert("购物车为空，无法结算")
-    return
-  }
-
-  if (deliveryMethod.value === 'delivery' && !selectedAddressId.value) {
-    alert("请选择收货地址")
-    return
-  }
-
-  const payload = {
-    delivery_method: deliveryMethod.value,  // 传递配送方式
-  }
-
-  if (deliveryMethod.value === 'delivery') {
-    payload.address_id = selectedAddressId.value
-  }
-
-  const res = await https.post('/api/fengshui/create_order/', payload)
-
-  if (res?.order_id) {
-    alert(`订单创建成功，订单号：${res.order_id}`)
-
-     await pay(res.order_id)
-  }
-}
 
 
 
@@ -275,32 +258,13 @@ const loadCart = async () => {
 };
 
 
-
-
 // ************* 修改数量
 
 const saveLocalCart = (items) => {
   localStorage.setItem(LOCAL_KEY, JSON.stringify(items));
 };
 
-const changeQuantity2 = async (item, newQuantity) => {
-  
-  if (newQuantity < 1) return;
 
-  const userId = localStorage.getItem('user_id');
-  if (userId) {
-    await https.put('/api/fengshui/cart/', { id: item.id, quantity: newQuantity });
-    await loadCart();
-  } else {
-    const cartItems = getLocalCart();
-    const target = cartItems.find(p => p.product_id === item.product_id);
-    if (target) {
-      target.quantity = newQuantity;
-      saveLocalCart(cartItems);
-      cart.value.items = cartItems;
-    }
-  }
-};
 
 const changeQuantity = async (item, newQuantity) => {
   if (newQuantity < 1) return;
@@ -385,14 +349,16 @@ const checkout = async () => {
 
   const payload = {
     delivery_method: deliveryMethod.value,
+    total_price:total.value,
   };
 
   if (deliveryMethod.value === 'delivery') {
     payload.address_id = selectedAddressId.value;
+    
   }
 
   const res = await https.post('/api/fengshui/create_order/', payload);
-
+  console.log('totle',total.value)
   if (res?.order_id) {
     alert(`订单创建成功，订单号：${res.order_id}`);
     await pay(res.order_id);

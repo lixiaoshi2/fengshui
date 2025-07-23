@@ -80,17 +80,19 @@
         备注中请写订单号：<strong>{{ order?.id }}</strong>
       </div>
 
-      <div v-if="paymentMethod === 'alipay'" class="text-center">
-        请使用 <strong>支付宝</strong> 扫描下方二维码支付：<br />
-        <img :src="alipayQR" alt="支付宝二维码" class="mx-auto my-4 w-48 h-48 object-contain" />
+      <div v-if="paymentMethod === 'wechat'" class="text-center">
+        请使用 <strong>微信</strong> 扫描下方二维码支付：<br />
+        <img src="@/assets/images/shoukuan/weixinzhifu.jpg" alt="微信二维码" class="mx-auto my-4 w-48 h-48 object-contain" />
         备注中请填写订单号：<strong>{{ order?.id }}</strong>
       </div>
 
-      <div v-if="paymentMethod === 'wechat'" class="text-center">
-        请使用 <strong>微信</strong> 扫描下方二维码支付：<br />
-        <img :src="wechatQR" alt="微信二维码" class="mx-auto my-4 w-48 h-48 object-contain" />
+      <div v-if="paymentMethod === 'alipay'" class="text-center">
+        请使用 <strong>支付宝</strong> 扫描下方二维码支付：<br />
+        <img src="@/assets/images/shoukuan/zhifubao.png" alt="支付宝二维码" class="mx-auto my-4 w-48 h-48 object-contain" />
         备注中请填写订单号：<strong>{{ order?.id }}</strong>
       </div>
+
+      
 
       <button @click="confirmPaid" class="mt-4 bg-blue-500 text-white mb-10 py-2 px-4 rounded">
         我已完成支付
