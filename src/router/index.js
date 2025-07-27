@@ -37,10 +37,16 @@ const router = createRouter({
   component: () => import('@/views/my/user_logout.vue')
 },
 {
-  // 退出登录
+  // 
   path: '/user_changepasswd',
   name: 'user_changePasswd',
   component: () => import('@/views/my/user_changePasswd.vue')
+},
+{
+  // 修改用户名
+  path: '/user_changename',
+  name: 'user_changename',
+  component: () => import('@/views/my/user_changename.vue')
 },
 {
   // 更改密码
@@ -121,6 +127,11 @@ const router = createRouter({
       path: '/bai',
       name: 'bai',
       component: () => import('../views/fengshuiapp/bai.vue')
+    },
+ {  // 风水
+      path: '/fengshuifangwu',
+      name: 'fengshuifangwu',
+      component: () => import('../views/fengshuiapp/fengshuifangwu.vue')
     },
 
 {
@@ -235,11 +246,34 @@ const router = createRouter({
       name: 'product',
       component: () => import('@/views/fengshuiapp/ProductDetail.vue')
     },
+    { //  风水看房字的商品详情页
+      path: '/fengshui_house',
+      name: 'fengshui_house',
+      component: () => import('@/views/fengshuiapp/fengshui_house.vue')
+    },
 
     { // 起名
       path: '/qiming',
       name: 'qiming',
       component: () => import('@/views/fengshuiapp/qiming.vue')
+    },
+
+
+
+
+
+
+    // ***********************积分推荐类
+    { // 积分
+      path: '/jifen',
+      name: 'jifen',
+      component: () => import('@/views/fengshuiapp/jifen.vue')
+    },
+
+    { // 支付操作
+      path: '/payment_list',
+      name: 'payment_list',
+      component: () => import('@/views/fengshuiapp/payment_list.vue')
     }
 
 

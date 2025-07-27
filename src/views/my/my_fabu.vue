@@ -13,8 +13,13 @@
         <span class="ml-1 text-base">返回</span>
       </button>
 
-      <h1 class="text-lg font-semibold text-gray-800 tracking-wide">忆福安文化</h1>
-
+      
+    <h1 v-if="!username" class="text-lg font-semibold text-gray-800 tracking-wide">
+      忆福安文化
+    </h1>
+    <div v-else class="text-sm text-gray-600">
+      欢迎，{{ username }}
+    </div>
       <div class="w-14"></div>
     </header>
 
@@ -128,6 +133,20 @@ const menus = [
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
           </svg>`,
   },
+  {
+    label: '我的推荐码',
+    path: '/invite',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
+          </svg>`,
+  },
+  {
+    label: '推荐及积分',
+    path: '/jifen',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
+          </svg>`,
+  },
  
 ]
 
@@ -154,8 +173,6 @@ const menus_guanli = [
 ]
 
 
-
-
 const menus2 = [
   {
     label: '修改密码',
@@ -167,6 +184,13 @@ const menus2 = [
   {
     label: '修改邮件',
     path: '/user_changeEmail',
+    svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
+          </svg>`,
+  },
+  {
+    label: '修改昵称',
+    path: '/user_changename',
     svg: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-3-3v6m-7 4h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v17z"/>
           </svg>`,
@@ -192,6 +216,7 @@ const menus2 = [
 
 ]
 
+const username = ref('')
 
 const logout = () => {
   // 在这里执行你的登出逻辑，例如清除 token，更新登录状态
@@ -199,6 +224,7 @@ const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('refresh');
   localStorage.removeItem('user_role');
+  localStorage.removeItem('username');
   isLoggedIn.value = false; // 模拟登出
   // isMenuOpen.value = false;
   router.push('/user_login'); // 登出后跳转到首页或其他页面
@@ -236,6 +262,7 @@ onMounted(() => {
   localStorage.setItem("is_need", 1);
   if (userId) {
     isLoggedIn.value = true;
+    username.value = localStorage.getItem("username")
     console.log('用户已登录，user_id:', userId);
   } else {
     isLoggedIn.value = false;

@@ -1,41 +1,3 @@
-<!-- <template>
-  <div class="p-4">
-    <h1 class="text-xl font-bold mb-4">💰 订单支付</h1>
-    <div class="bg-white p-4 rounded shadow mb-4">
-      <p>订单号：<strong>{{ order?.id }}</strong></p>
-      <p>金额总计：<strong>${{ order?.total_price }}</strong></p>
-    </div>
-
-
-    <h2 class="text-md font-semibold mb-2">请选择支付方式</h2>
-    <div class="text-sm text-green-600 mb-8">平台对命理方面的收费只接受微信和支付宝</div>
-    <div class="space-y-4">
-      <button @click="selectMethod('offline')" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700">
-        线下付款
-      </button>
-      <button @click="selectMethod('etransfer')" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">
-        e-Transfer
-      </button>
-    </div>
-
-    <div v-if="paymentMethod" class="text-sm mt-6 bg-white p-4 rounded shadow">
-      <h3 class="font-semibold mb-2">支付说明</h3>
-      <div  v-if="paymentMethod === 'offline'">
-        请您到店付款<br>
-         地址：<strong>20 Orchid Rd, Markham Toronto L3T 7T6   </strong>
-         <br>电话： 6473232111 <br>
-         
-       
-      </div>
-      <div v-if="paymentMethod === 'etransfer'">
-        请通过 e-Transfer 发送款项至邮箱：<br />
-        <strong class="text-blue-600 text-lg">Sunnydu1212@hotmail.com</strong><br />
-        备注中请写订单号：<strong>{{ orderId }}</strong>
-      </div>
-      <button @click="confirmPaid" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">我已完成支付</button>
-    </div>
-  </div>
-</template> -->
 
 <template>
   <div class="p-4">
@@ -125,7 +87,7 @@ const selectMethod = (method) => {
 const confirmPaid = async () => {
   const res = await https.post('/api/fengshui/pay_order/', {
     order_id: orderId,
-    payment_method: paymentMethod.value
+    pay_method: paymentMethod.value
   })
 
   alert(res.message || "支付记录已保存")

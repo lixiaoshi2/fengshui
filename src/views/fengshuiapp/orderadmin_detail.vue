@@ -9,13 +9,15 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800 mb-4">
         <div>
           <p><strong>订单总价:</strong> ¥{{ order.total_price }}</p>
+          <p><strong>是否支付:</strong> {{ order.is_paid ? '是' : '否' }}</p>
           <p><strong>当前状态:</strong> {{ order.status }}</p>
           <p><strong>配送方式:</strong> {{ order.delivery_method }}</p>
           <p><strong>创建时间:</strong> {{ formatDateTime(order.created_at) }}</p>
         </div>
         <div>
-          <p><strong>所属用户:</strong> {{ order.user?.username }} (ID: {{ order.user?.id }})</p>
-          <p><strong>是否支付:</strong> {{ order.is_paid ? '是' : '否' }}</p>
+          <p><strong>所属用户:</strong> {{ order.user?.last_name }} - {{ order.user?.mobile }} - ID: {{ order.user?.id }} </p>
+          
+          
           <p v-if="order.is_paid"><strong>支付时间:</strong> {{ formatDateTime(order.pay_time) }}</p>
         </div>
       </div>
@@ -52,6 +54,7 @@
             <option disabled value="">选择新状态</option>
             <option value="待支付">待支付</option>
             <option value="已付款">已付款</option>
+            <option value="已确认">已确认</option>
             <option value="已发货">已发货</option>
             <option value="已完成">已完成</option>
           </select>
@@ -107,8 +110,10 @@ const fetchOrderDetail = async () => {
 
 const submitStatusUpdate = async () => {
   const id = route.params.id
+  console.log('statusForm.value',statusForm.value.new_status)
   const res = await https.put(`/api/fengshui/ordersdetail_admin/${id}/`, statusForm.value)
   order.value = res
+  console.log("statusForm.value",statusForm.value)
   alert('状态更新成功')
 }
 

@@ -19,7 +19,7 @@
     <van-cell style="  display: flex; font-size: small; font-weight: bold;" title="联系方式" />
     <van-row> 
       <van-col style="display: flex;align-items: center; justify-content: center;" span="24"> 
-      <van-cell  title="电子邮件：lixiaoshi101@gmail.com"    />
+      <van-cell  title="电子邮件：Sunnydu1212@hotmail.com, lixiaoshi101@gmail.com"    />
     </van-col>
       
     <van-col style="display: flex;align-items: center; justify-content: center;" span="24"> 
