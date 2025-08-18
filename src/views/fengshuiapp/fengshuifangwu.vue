@@ -41,7 +41,7 @@ const fullImage = (path) => {
 
 onMounted(async () => {
   // const category = route.query.category || ''
-  const category = '风水'
+  const category = '房屋风水'
   categoryTitle.value = category || '商品列表'
 
   if (!category) {
@@ -52,7 +52,7 @@ onMounted(async () => {
   try {
     const res = await https.get('/api/fengshui/products/', {
       // params: { category }
-      category: '风水' 
+      category: '房屋风水' 
     })
     console.log('res',res)
     products.value = res

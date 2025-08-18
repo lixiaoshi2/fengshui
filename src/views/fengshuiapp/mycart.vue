@@ -328,6 +328,8 @@ const removeItem = async (item) => {
 };
 
 
+
+
 const checkout = async () => {
   const userId = localStorage.getItem('user_id');
 

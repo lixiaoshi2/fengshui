@@ -1,7 +1,7 @@
 
 <template>
-  <div class="p-4">
-    <h1 class="text-xl font-bold mb-4">💰 订单支付</h1>
+  <div class="p-4 md:mt-20 mb-16">
+    <h1 class="text-xl font-bold mb-4 ">💰 订单支付</h1>
 
     <!-- 订单信息 -->
     <div class="bg-white p-4 rounded shadow mb-4">
@@ -54,11 +54,14 @@
         备注中请填写订单号：<strong>{{ order?.id }}</strong>
       </div>
 
+      <button @click="confirmPaid" class="px-3 py-1 text-sm bg-[#5a3e2b] text-white rounded shadow hover:opacity-95">
+        完成支付后(必点)
+      </button>
+      <button @click="router.push('/contactus')" class="mx-2 px-3 py-1 border border-[#cfa87a] text-[#5a3e2b] rounded">
+        咨询
+      </button>
       
 
-      <button @click="confirmPaid" class="mt-4 bg-blue-500 text-white mb-10 py-2 px-4 rounded">
-        我已完成支付
-      </button>
     </div>
   </div>
 </template>

@@ -8,7 +8,8 @@ import { VantResolver } from 'unplugin-vue-components/resolvers';
 //这个一定要有，因为如果不安装puppeteer也就是模拟无头访问网站会因为语法不支持无效，如果安装安装不了 加一个参数--force
 import legacy from '@vitejs/plugin-legacy';  
 import prerender from 'vite-plugin-prerender'
-const Renderer = prerender.PuppeteerRenderer;
+
+// const Renderer = prerender.PuppeteerRenderer;
 import path from 'path'
 import compress from 'vite-plugin-compression'
 
@@ -17,8 +18,6 @@ export default defineConfig({
   plugins: [
     vue(),
     compress({ algorithm: 'gzip' }), 
-
-
 
     Components({
       resolvers: [VantResolver()],
@@ -30,34 +29,24 @@ export default defineConfig({
     }),
     
     prerender({
-      // routes: ['/home','/glasses_list'], // 预渲染入口页面,在这里可以添加需要加入搜索引擎的页面
-      routes: [],
-      staticDir: path.join(__dirname, 'dist'),
-      // 可选配置
-      // minify: true, // 是否压缩 HTML
-      minify : { 
-        collapseBooleanAttributes : true , 
-        collapseWhitespace : true , 
-        decodeEntities : true , 
-        keepClosingSlash : true , 
-        sortAttributes : true , 
-      } ,
-      inject: {
-        foo: 'bar', // 在预渲染时注入的全局变量
+      
+      staticDir: path.resolve(__dirname, 'dist'), // 绝对路径更保险 
+      routes: [
+        '/home',               // 首页
+        '/bai',          // 关于页
+        '/mingli', // 起名产品
+        '/mingli_jieshao',         // 示例商家页
+        '/naming',         // 示例商家页
+        '/chooseday',         // 示例商家页
+        '/zhanbu',         // 示例商家页
+        '/bazi',         // 示例商家页
+        '/hunyin',         // 示例商家页
+      ],
+      rendererOptions: {
+        // 你可以加一个等待时间，保证页面数据加载完
+        renderAfterTime: 2000
       },
-      renderer: new Renderer({
-        
-        // renderAfterDocumentEvent: 'render-event', // 确保渲染完成
-        // headless: true,
-        headless: false,
-        renderAfterDocumentEvent: 'render-event',
-        timeout: 10000,
-        renderAfterTime: 5000,
-        maxConcurrentRoutes: 4,
 
-      }),
-
-       fallback: "index.html",
     }),
   // ********* 此段预渲染的内容配置结束 
   ],

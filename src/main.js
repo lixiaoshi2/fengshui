@@ -46,3 +46,16 @@ router.isReady().then(() => {
       document.dispatchEvent(new Event('render-event'))
     }, 3000) // 这里是选择延迟 1 秒后触发事件，确保页面已完全加载
   })
+
+
+  // 这是客服代码开始
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6899eab32a3c5f192ada05b7/1j2cjpjdp';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+// 客服代码结束

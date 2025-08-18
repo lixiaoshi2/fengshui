@@ -1,10 +1,10 @@
 <template>
 
   
-  <div class="p-4">
-    <h1 class="text-base font-medium mb-4">📦 我的订单</h1>
+  <div class="p-2 md:mt-24">
+    <h1 class="text-base font-medium mb-1">📦 我的订单</h1>
 
-    <div v-for="order in orders" :key="order.id" class="bg-white rounded shadow p-4 mb-4 border-b-4 border-gray-200">
+    <div v-for="order in orders" :key="order.id" class="bg-white rounded shadow p-2 mb-2 border-b-1 border-gray-200">
       <div class="mb-2 text-sm text-gray-700">
         <strong>订单编号：</strong> {{ order.id }}<br>
         <strong>下单时间：</strong> {{ formatTime(order.created_at) }}<br>

@@ -13,9 +13,9 @@
     <div class="flex justify-between items-center mb-3 p-3 text-sm text-gray-400">
       被推荐人消费以后，才能增加积分。 <br>
        第一次消费，老客户可以获得50的积分，新客户可以获取50积分，积分可用于风水咨询。  <br>
-        vip客户推广的客户每次消费，都可获取50积分，还以兑换现金。
+       
     </div>
-
+<!--  vip客户推广的客户每次消费，都可获取50积分，还以兑换现金。 -->
     <!-- 积分统计 -->
     <div class="text-center mb-4">
       <!-- <h1 class="text-2xl font-bold text-gray-800">积分: {{ jifen }}</h1> -->

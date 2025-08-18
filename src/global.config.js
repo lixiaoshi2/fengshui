@@ -1,15 +1,6 @@
 // 这个文件设置了本程序的配置文件
 
-// var backendserver = ''
-// if (window.location.protocol == "http:"){
-//   console.log('访问的协议是http')
-//   // response.content = response.content.replace(config.backendserver1, config.backendserver2);
-//   backendserver ="houtai"
-//   console.log('houtai2',backendserver)
-// }else{
-//   backendserver ="houtai2"
-//   console.log('houtai2',backendserver)
-// }
+
 
 const config = {
   whiteListApi:[
@@ -27,21 +18,12 @@ const config = {
     // strip_pk:'pk_live_51QSNgTLrY4OYG7KKhv7jjjOvLOazy5Jn1DmD8rsQfAGDKowdbynLK7hE4T03PDZdnesLfD1aU6zuU5UusiYUNAdj00P9JwfICd',
 
 
-    // 后台服务器的地址
-    // backendserver:'http://192.168.1.127:8000/',  //如果出错需要保留
-    //  backendserver:backserver,
     backendserver1:'http://192.168.1.127:8000/',
 
     backendserver2:'https://www.nearnet.ca/api/',
-    // backendserver2:'https://www.mynextdoor01.space/api/',
-    // 下面必须包含，这样才会自动获取backendserver
+  
     backendserver:'',
-    // richtextserver:'http://192.168.1.165:8000/api/',
-    // backendserver:'http://lplat.l5.ca:5000/',
-
-    // import config from '@/global.config.js' //引用这里的变量
-    // frontserver:'http://http://192.168.14.1:3000/',  //这个地址在密码重置中有用，改成上面的，还是没有用
-    // frontserver:'https://www.nearnet.ca/',  //这个地址在密码重置中有用，改成上面的
+  
 
 
   // 我现在要放数组工作数组进去

@@ -56,6 +56,7 @@ const route = useRoute()
 // const store = useStore()
 import https from '@/utils/request.js';
 import { showSuccessToast,showDialog  } from 'vant';
+import { el } from 'element-plus/es/locale/index.mjs';
 
 // 假设 URL 为 http://example.com/?param1=value1&param2=value2
 // http://192.168.1.127:5173/user_password_forget/?userid=1&token=c6h06c-7959435990dc9cf2fa2cdb9771af94f4
@@ -100,12 +101,17 @@ const validateEmail = (value) => {
     const values = {
       'email':email.value
     }
-    showDialog({message:'请求已发送，请等待'});
+    // showDialog({message:'请求已发送，请等待'});
     https.post('/api/user/fogetpassword/',values).then(response => {
       console.log('asdfas555111');
       console.log(response);
+      if(response.error){
+        alert(response.error)
+      }else{
+        showDialog({message:'修改密码请求已经发送到您的邮件地址，请检查'});
+      }
       // showSuccessToast({ message: '密码修改已经提交了，请在电子邮件中重置', background: '#ff4444', duration: 5000,color: '#ff0000' });
-      showDialog({message:'修改密码请求已经发送到您的邮件地址，请检查'});
+      
       // 记住需要修改settings里的前端地址，从而改善
 
     }).catch(error => {

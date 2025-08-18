@@ -2,15 +2,17 @@
 <!-- 顶部页头：只在 md（≥768px）及更大屏幕显示 -->
 <header class="hidden md:flex justify-between items-center px-6 py-2 bg-white shadow-md fixed top-0 left-0 right-0 z-50 ">
   <div class="max-w-[800px] w-full mx-auto flex justify-between items-center px-6 py-4 ">
-    <div class="text-2xl font-bold text-blue-600">忆福安文化平台</div>
+    <div @click="router.push('/home')" class="text-2xl font-bold text-blue-600">忆福安文化平台</div>
 
   <nav class="flex space-x-8 text-gray-700 font-medium">
     <a href="/home" class="hover:text-blue-500">首页</a>
     <a href="/contactus" class="hover:text-blue-500">联系我们</a>
-   
+
+     <a href="/mycart" class="flex items-center hover:text-blue-500">
+       购物车
+    </a>
   
     <a href="/menu_setup" class="flex items-center hover:text-blue-500">
-    
        个人信息
     </a>
     <a href="/my_fabu" class="flex items-center hover:text-blue-500">

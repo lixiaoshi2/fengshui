@@ -6,38 +6,59 @@
 
     <!-- 商品标题和价格 -->
     <h1 class="text-xl font-bold mb-2 px-5 md:mt-16 mt-4">{{ product.name }}</h1>
-    <p class="text-red-600 text-lg font-semibold mb-4 px-5">${{ product.price }}</p>
+  
+    <div class="flex items-baseline mb-4 px-5">
+      <p class="text-red-600 text-lg font-semibold mr-3">${{ product.price }}</p>
 
+      <p v-if="product.price_origin  > product.price"
+        class="text-gray-500 text-sm line-through">
+        ${{ product.price_origin }}
+      </p>
+    </div>
     <!-- 商品参数信息 -->
     <div class="text-sm text-gray-700 space-y-2 px-5">
       <p><strong>分类：</strong> {{ product.category }}</p>
       <p><strong>简介：</strong> {{ product.description }}</p>
       <p><strong>规格：</strong> {{ product.spec || '标准配置' }}</p>
     </div>
+    <div class="px-4 pt-2">
+        <template v-if="['起名', '择日','占卜','流年运势','八字','婚姻','房屋风水','定制道符','紫薇斗数'].includes(product.category)">
+      <!-- 立即购买 -->
+      <a @click="checkout2(product)" 
+         class="px-2 py-2 text-lg bg-[#5a3e2b] text-white rounded shadow hover:opacity-95 block text-center">
+        立即购买
+      </a>
+    </template>
+
+    <template v-else>
+      <!-- 加入购物车 -->
+      <van-button type="primary" block @click="addToCart">
+        加入购物车
+      </van-button>
+    </template>
+    </div>
+  
 
     <!-- 商品内容卡片（图片区域） -->
     <div class="p-4 bg-white shadow mt-4">
-      <img
-        v-if="product.cover_image"
-        :src="fullImage(product.cover_image)"
-        class="w-full h-auto object-contain rounded-lg mb-4"
-        alt="主图"
-      />
-     
-      <img
-        v-for="(img, idx) in product.images"
-        :key="idx"
-        :src="fullImage(img.image)"
-        class="w-full h-auto object-contain rounded-lg mb-8"
-        alt="附图"
-      />
+      <img v-if="product.cover_image" :src="fullImage(product.cover_image)"
+        class="w-full h-auto object-contain rounded-lg mb-4" alt="主图" />
+
+      <img v-for="(img, idx) in product.images" :key="idx" :src="fullImage(img.image)"
+        class="w-full h-auto object-contain rounded-lg mb-8" alt="附图" />
     </div>
 
     <!-- 固定底部按钮 -->
     <div class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-inner mb-12 flex justify-center">
-  <div class="w-full max-w-xl"> <van-button type="primary" block @click="addToCart">加入购物车</van-button>
-  </div>
-</div>
+      <!-- <div class="w-full max-w-xl"> <van-button type="primary" block @click="addToCart">加入购物车</van-button>
+      </div> -->
+    </div>
+
+      <!-- 判断分类 -->
+    
+
+
+
   </div>
 
 
@@ -106,33 +127,13 @@ const fullImage = (path) => {
   return '';
 };
 
-// 点击加入购物车
-const addToCart2 = async () => {
+// 点击资讯类直接购买
 
-   try {
-    // 尝试发送请求
-    await https.post('/api/fengshui/cart/', {
-      product: product.value.id,
-      quantity: 1
-    });
 
-    // 如果请求成功，弹出成功信息
-    alert('已加入购物车，请在购物车中完成后续操作');
-
-  } catch (error) {
-    // 捕获请求过程中发生的错误
-      router.push('/user_login'); // 如果你使用了 Vue Router，需要先引入 useRouter
-   
-  }
-
-}
 
 
 // ******************************新的不需要登录兼容的购物车*****************
-
 const LOCAL_KEY = 'guest_cart';
-
-
 
 function saveLocalCart(cart) {
   localStorage.setItem(LOCAL_KEY, JSON.stringify(cart));
@@ -181,6 +182,43 @@ function getLocalCart() {
   const raw = localStorage.getItem(LOCAL_KEY);
   return raw ? JSON.parse(raw) : [];
 }
+
+
+
+const pay = async (orderId) => {
+  router.push(`/pay/${orderId}`) // 🔁跳转到支付页
+}
+
+const checkout2 = async (item) => {
+  const userId = localStorage.getItem('user_id');
+ 
+  if (!userId) {
+    alert("请先登录再进行结算！");
+    router.push('/user_login');
+    return;
+  }
+
+  const payload = {
+    delivery_method: 'zixun',
+    total_price:item.price,
+    product:item.id
+  };
+
+  console.log("paload",payload)
+  
+
+  const res = await https.post('/api/fengshui/create_order/', payload);
+  
+  if (res?.order_id) {
+    alert(`订单创建成功，订单号：${res.order_id}`);
+    await pay(res.order_id);
+  }
+
+};
+
+
+
+
 
 const loadCart = async () => {
   const userId = localStorage.getItem('user_id');

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
-// import act_list from '../views/act_list.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -127,14 +126,105 @@ const router = createRouter({
       path: '/bai',
       name: 'bai',
       component: () => import('../views/fengshuiapp/bai.vue')
+  },
+ {  // 起名产品
+      path: '/qimingproducts',
+      name: 'qimingproducts',
+      component: () => import('../views/fengshuiapp/qimingproducts.vue')
+  },
+ {  // 择日
+      path: '/chooseday',
+      name: 'chooseday',
+      component: () => import('../views/fengshuiapp/chooseday.vue')
+  },
+ {  // 房屋风水
+      path: '/fengshui_house',
+      name: 'fengshui_house',
+      component: () => import('../views/fengshuiapp/fengshui_house.vue')
     },
- {  // 风水
-      path: '/fengshuifangwu',
-      name: 'fengshuifangwu',
-      component: () => import('../views/fengshuiapp/fengshuifangwu.vue')
+ {  // 房屋风水
+      path: '/fengshui_products',
+      name: 'fengshui_products',
+      component: () => import('../views/fengshuiapp/fengshui_products.vue')
+    },
+ {  // 起名
+      path: '/naming',
+      name: 'naming',
+      component: () => import('../views/fengshuiapp/naming.vue')
+    },
+ {  // 紫薇斗数
+      path: '/ziwei',
+      name: 'ziwei',
+      component: () => import('../views/fengshuiapp/ziwei.vue')
+    },
+ {  // 紫薇斗数
+      path: '/ziwei_products',
+      name: 'ziwei_products',
+      component: () => import('../views/fengshuiapp/ziwei_products.vue')
+    },
+ {  // 择日
+      path: '/chooseday_products',
+      name: 'chooseday_products',
+      component: () => import('../views/fengshuiapp/chooseday_products.vue')
+    },
+ {  // 占卜问卦
+      path: '/zhanbu',
+      name: 'zhanbu',
+      component: () => import('../views/fengshuiapp/zhanbu.vue')
+    },
+ {  // 占卜问卦老师
+      path: '/zhanbu_products',
+      name: 'zhanbu_products',
+      component: () => import('../views/fengshuiapp/zhanbu_products.vue')
+    },
+ {  // 徽标设计
+      path: '/huibiao_design',
+      name: 'huibiao_design',
+      component: () => import('../views/fengshuiapp/huibiao_design.vue')
+    },
+ {  // 定制符
+      path: '/dingzhifu',
+      name: 'dingzhifu',
+      component: () => import('../views/fengshuiapp/dingzhifu.vue')
+    },
+ {  // 定制符
+      path: '/dingzhifu_products',
+      name: 'dingzhifu_products',
+      component: () => import('../views/fengshuiapp/dingzhifu_products.vue')
+    },
+ {  // 八字
+      path: '/bazi',
+      name: 'bazi',
+      component: () => import('../views/fengshuiapp/bazi.vue')
+    },
+ {  // 八字产品
+      path: '/bazi_products',
+      name: 'bazi_products',
+      component: () => import('../views/fengshuiapp/bazi_products.vue')
     },
 
-{
+ {  // 流年运势
+      path: '/liunian',
+      name: 'liunian',
+      component: () => import('../views/fengshuiapp/liunian.vue')
+  },
+ {  // 流年运势产品
+      path: '/liunian_products',
+      name: 'liunian_products',
+      component: () => import('../views/fengshuiapp/liunian_products.vue')
+  },
+ {  // 婚姻分析
+      path: '/hunyin',
+      name: 'hunyin',
+      component: () => import('../views/fengshuiapp/hunyin.vue')
+  },
+ {  // 婚姻分析产品
+      path: '/hunyin_products',
+      name: 'hunyin_products',
+      component: () => import('../views/fengshuiapp/hunyin_products.vue')
+  },
+
+{ //纸钱
   path: '/bai/zhiqian',
   component: () => import('@/views/fengshuiapp/bai/zhiqian.vue')
 },
@@ -142,20 +232,6 @@ const router = createRouter({
   path: '/bai/zhiqian2',
   component: () => import('@/views/fengshuiapp/bai/zhiqian2.vue')
 },
-// {
-//   path: '/bai/shouyi',
-//   component: () => import('@/views/product/Shouyi.vue')
-// },
-// {
-//   path: '/bai/zhuchi',
-//   component: () => import('@/views/product/Zhuchi.vue')
-// },
-// {
-//   path: '/bai/lingtang',
-//   component: () => import('@/views/product/Lingtang.vue')
-// }
-
-
 
 
 
@@ -194,6 +270,11 @@ const router = createRouter({
       path: '/mycart',
       name: 'mycart',
       component: () => import('@/views/fengshuiapp/mycart.vue')
+    },
+    { //购物车2
+      path: '/mycart2',
+      name: 'mycart2',
+      component: () => import('@/views/fengshuiapp/mycart2.vue')
     },
     { //订单列表
       path: '/orders',

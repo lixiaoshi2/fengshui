@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 bg-gray-100">
-    <h1 class="text-xl font-bold  mb-4 text-yellow-700">🔮 风水命理专区</h1>
+    <h1 class="text-xl font-bold  mb-4 text-yellow-700">🔮 人生运势、八字算命、婚姻预测、风水、财运</h1>
 
 
      <!-- 分类导航 -->
@@ -36,16 +36,23 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const categories = [
-  { name: "🎉 风水师傅介绍", description: "", path: "/mingli_jieshao" },
-  { name: "🎉 起名", description: "新生儿起名、改名、公司起名", path: "/product/6" },
-   { name: "🔮 风水", description: "住宅、商铺、墓地等", path: "/fengshuifangwu" },
-  { name: "🔮 紫薇斗命盘分析", description: "", path: "/mingli" },
-  { name: "🔮 流年运势预测分析", description: "", path: "/mingli" },
-  { name: "⚰️ 个人头像设计", description: "微信头像等", path: "/bai" },
-  { name: "🔮 公司徽标设计", description: "", path: "/product/4" },
-  { name: "🔮 择日", description: "结婚、开业、动工、搬家等", path: "/mingli" },
+  { name: "🎉 团队介绍", description: "", path: "/mingli_jieshao" },
+  { name: "🎉 起名", description: "新生儿起名、改名、公司起名", path: "/naming" },
+  { name: "🔮 择日", description: "结婚、开业、动工、搬家等", path: "/chooseday" },
+  { name: "🎉 占卜问卦", description: "洞察事情的发展趋势与结果", path: "/zhanbu" },
+  { name: "🎉 八字排盘", description: "推算出专属命盘", path: "/bazi" },
+  { name: "🔮 流年运势", description: "推算流年运势", path: "/liunian" },
+  { name: "🔮 合婚分析", description: "分析两人的婚姻运势", path: "/hunyin" },
+   { name: "🔮 远程风水堪舆", description: "住宅、商铺、墓地等", path: "/fengshui_house" },
+   { name: "🔮 定制符箓", description: "住宅、商铺、墓地等", path: "/dingzhifu" },
+
+
+  { name: "🔮 紫薇斗命盘分析", description: "", path: "/ziwei" },
+  
+  // { name: "⚰️ 头像徽标设计", description: "微信头像等设计、公司徽标等设计", path: "/huibiao_design" },
+  // { name: "🔮 公司徽标设计", description: "", path: "/product/4" },
+  
  
-  { name: "🔮 八字排盘/合婚分析", description: "", path: "/mingli" },
 ];
 
 // 点击跳转专区

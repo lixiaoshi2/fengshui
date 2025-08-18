@@ -21,6 +21,7 @@
     <form @submit.prevent="submitProduct" enctype="multipart/form-data">
       <input v-model="form.name" type="text" placeholder="商品名称" class="input" />
       <input v-model="form.price" type="number" placeholder="价格" class="input" step="0.01" />
+      <input v-model="form.price_origin" type="number" placeholder="原价" class="input" step="0.01" />
       <input v-model="form.category" type="text" placeholder="分类" class="input" />
       <textarea rows="5" v-model="form.description" placeholder="描述" class="input"></textarea>
       <input v-model="form.spec" type="text" placeholder="规格" class="input" />
@@ -32,7 +33,7 @@
       <label>商品多图：</label>
       <input type="file" multiple @change="handleImages" accept="image/*" class="input" />
 
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">提交</button>
+      <button type="submit" class="mb-16 bg-blue-500 text-white px-4 py-2 rounded mt-4">提交</button>
     </form>
   </div>
 </template>
@@ -44,6 +45,7 @@ import https from '@/utils/request.js'  // 确保你这里使用的是 axios 实
 const form = ref({
   name: '',
   price: '',
+  price_origin: '',
   category: '',
   description: '',
   spec: '',
@@ -67,6 +69,7 @@ const submitProduct = async () => {
   // 添加字段
   formData.append('name', form.value.name)
   formData.append('price', form.value.price)
+  formData.append('price_origin', form.value.price_origin)
   formData.append('category', form.value.category)
   formData.append('description', form.value.description)
   formData.append('spec', form.value.spec)
